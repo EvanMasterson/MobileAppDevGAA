@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="emasterson.mobileappdevgaa.ClubListActivity">
+
+    <TextView
+        android:id="@+id/clubListTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/clubListTextView"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="344dp"
+        android:layout_height="463dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/antrimBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/antrim_gaa" />
+
+            <Button
+                android:id="@+id/armaghBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/armagh_gaa" />
+
+            <Button
+                android:id="@+id/carlowBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/carlow_gaa" />
+
+            <Button
+                android:id="@+id/cavanBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cavan_gaa" />
+
+            <Button
+                android:id="@+id/clareBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clare_gaa" />
+
+            <Button
+                android:id="@+id/corkBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cork_gaa" />
+
+            <Button
+                android:id="@+id/derryBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/derry_gaa" />
+
+            <Button
+                android:id="@+id/donegalBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/donegal_gaa" />
+
+            <Button
+                android:id="@+id/downBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/down_gaa" />
+
+            <Button
+                android:id="@+id/dublinBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dublin_gaa" />
+
+            <Button
+                android:id="@+id/fermanaghBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fermanagh_gaa" />
+
+            <Button
+                android:id="@+id/galwayBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/galway_gaa" />
+
+            <Button
+                android:id="@+id/kerryBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kerry_gaa" />
+
+            <Button
+                android:id="@+id/kildareBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kildare_gaa" />
+
+            <Button
+                android:id="@+id/kilkennyBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kilkenny_gaa" />
+
+            <Button
+                android:id="@+id/laoisBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/laois_gaa" />
+
+            <Button
+                android:id="@+id/leitrimBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/leitrim_gaa" />
+
+            <Button
+                android:id="@+id/limerickBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/limerick_gaa" />
+
+            <Button
+                android:id="@+id/longfordBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/longford_gaa" />
+
+            <Button
+                android:id="@+id/louthBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/louth_gaa" />
+
+            <Button
+                android:id="@+id/mayoBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mayo_gaa" />
+
+            <Button
+                android:id="@+id/meathBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/meath_gaa" />
+
+            <Button
+                android:id="@+id/monaghanBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/monaghan_gaa" />
+
+            <Button
+                android:id="@+id/offalyBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/offaly_gaa" />
+
+            <Button
+                android:id="@+id/roscommonBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/roscommon_gaa" />
+
+            <Button
+                android:id="@+id/sligoBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sligo_gaa" />
+
+            <Button
+                android:id="@+id/tipperaryBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tipperary_gaa" />
+
+            <Button
+                android:id="@+id/tyroneBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tyrone_gaa" />
+
+            <Button
+                android:id="@+id/waterfordBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/waterford_gaa" />
+
+            <Button
+                android:id="@+id/westmeathBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/westmeath_gaa" />
+
+            <Button
+                android:id="@+id/wexfordBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wexford_gaa" />
+
+            <Button
+                android:id="@+id/wicklowBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wicklow_gaa" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

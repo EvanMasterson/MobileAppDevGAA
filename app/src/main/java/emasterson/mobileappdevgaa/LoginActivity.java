@@ -8,11 +8,13 @@ import android.widget.Toast;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private TwitterLoginButton loginButton;
 
@@ -20,18 +22,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Twitter.initialize(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                Toast.makeText(MainActivity.this, "Wooooooooooo", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(LoginActivity.this, ClubListActivity.class);
+                startActivity(i);
+                finish();
             }
 
             @Override
             public void failure(TwitterException exception) {
-                Toast.makeText(MainActivity.this, "Nosffsfoofjsaofjaofao", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Nosffsfoofjsaofjaofao", Toast.LENGTH_SHORT).show();
             }
         });
     }
