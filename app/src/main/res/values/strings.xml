@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MobileAppDevGAA</string>
+    <string name="loadingText">Loading Application...</string>
 </resources>
