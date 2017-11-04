@@ -12,7 +12,7 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        int seconds = 3;
+        int seconds = 8;
 
         new Handler().postDelayed(new Runnable() {
             @Override

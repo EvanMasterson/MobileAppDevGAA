@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MobileAppDevGAA</string>
-    <string name="loadingText">Loading Application...</string>
+    <string name="loadingText">Home of GAA News</string>
     <string name="com.twitter.sdk.android.CONSUMER_KEY">nagPFYudKjxaxiVoM1jvY6aLG</string>
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">vc7so9zH2K3hMNXnZCS0S2DiAb9xep9UotK4gzy6Ea5bECasKQ</string>
     <string name="clubListTextView">Select your preferred club to load their Twitter page!</string>
