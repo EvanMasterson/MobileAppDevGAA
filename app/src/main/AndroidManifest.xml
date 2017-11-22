@@ -20,6 +20,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".ClubListActivity" />
+        <activity
+            android:name=".TwitterFeedActivity"
+            android:parentActivityName=".ClubListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ClubListActivity"/>
+        </activity>
     </application>
 
 </manifest>
