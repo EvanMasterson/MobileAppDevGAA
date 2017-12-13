@@ -41,192 +41,224 @@
                 android:id="@+id/antrimBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/antrim_gaa" />
 
             <Button
                 android:id="@+id/armaghBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/armagh_gaa" />
 
             <Button
                 android:id="@+id/carlowBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/carlow_gaa" />
 
             <Button
                 android:id="@+id/cavanBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/cavan_gaa" />
 
             <Button
                 android:id="@+id/clareBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/clare_gaa" />
 
             <Button
                 android:id="@+id/corkBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/cork_gaa" />
 
             <Button
                 android:id="@+id/derryBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/derry_gaa" />
 
             <Button
                 android:id="@+id/donegalBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/donegal_gaa" />
 
             <Button
                 android:id="@+id/downBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/down_gaa" />
 
             <Button
                 android:id="@+id/dublinBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/dublin_gaa" />
 
             <Button
                 android:id="@+id/fermanaghBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/fermanagh_gaa" />
 
             <Button
                 android:id="@+id/galwayBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/galway_gaa" />
 
             <Button
                 android:id="@+id/kerryBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/kerry_gaa" />
 
             <Button
                 android:id="@+id/kildareBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/kildare_gaa" />
 
             <Button
                 android:id="@+id/kilkennyBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/kilkenny_gaa" />
 
             <Button
                 android:id="@+id/laoisBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/laois_gaa" />
 
             <Button
                 android:id="@+id/leitrimBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/leitrim_gaa" />
 
             <Button
                 android:id="@+id/limerickBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/limerick_gaa" />
 
             <Button
                 android:id="@+id/longfordBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/longford_gaa" />
 
             <Button
                 android:id="@+id/louthBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/louth_gaa" />
 
             <Button
                 android:id="@+id/mayoBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/mayo_gaa" />
 
             <Button
                 android:id="@+id/meathBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/meath_gaa" />
 
             <Button
                 android:id="@+id/monaghanBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/monaghan_gaa" />
 
             <Button
                 android:id="@+id/offalyBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/offaly_gaa" />
 
             <Button
                 android:id="@+id/roscommonBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/roscommon_gaa" />
 
             <Button
                 android:id="@+id/sligoBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/sligo_gaa" />
 
             <Button
                 android:id="@+id/tipperaryBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/tipperary_gaa" />
 
             <Button
                 android:id="@+id/tyroneBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/tyrone_gaa" />
 
             <Button
                 android:id="@+id/waterfordBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/waterford_gaa" />
 
             <Button
                 android:id="@+id/westmeathBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/westmeath_gaa" />
 
             <Button
                 android:id="@+id/wexfordBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/wexford_gaa" />
 
             <Button
                 android:id="@+id/wicklowBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#0000"
                 android:text="@string/wicklow_gaa" />
         </LinearLayout>
     </ScrollView>

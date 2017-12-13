@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="antrim_gaa">Aontroim GAA</string>
+    <string name="armagh_gaa">Ard Mhacha GAA</string>
+    <string name="carlow_gaa">Ceatharlach GAA</string>
+    <string name="cavan_gaa">An Cabhán GAA</string>
+    <string name="clare_gaa">An Clár GAA</string>
+    <string name="cork_gaa">Corcaigh GAA</string>
+    <string name="donegal_gaa">Dún na nGall GAA</string>
+    <string name="down_gaa">An Dún GAA</string>
+    <string name="fermanagh_gaa">Fear Manach GAA</string>
+    <string name="galway_gaa">Gaillimh GAA</string>
+    <string name="kerry_gaa">Ciarraí GAA</string>
+    <string name="kildare_gaa">Cill Dara GAA</string>
+    <string name="kilkenny_gaa">Cill Chainnigh GAA</string>
+    <string name="laois_gaa">Laois GAA</string>
+    <string name="leitrim_gaa">Liatroim GAA</string>
+    <string name="limerick_gaa">Luimneach GAA</string>
+    <string name="derry_gaa">Doire GAA</string>
+    <string name="longford_gaa">An Longfort GAA</string>
+    <string name="louth_gaa">Lú GAA</string>
+    <string name="mayo_gaa">Maigh Eo GAA</string>
+    <string name="meath_gaa">An Mhí GAA</string>
+    <string name="monaghan_gaa">Muineachán GAA</string>
+    <string name="offaly_gaa">Uíbh Fhailí GAA</string>
+    <string name="roscommon_gaa">Ros Comáin GAA</string>
+    <string name="sligo_gaa">Sligeach GAA</string>
+    <string name="tipperary_gaa">Tiobraid Árann GAA</string>
+    <string name="tyrone_gaa">Tír Eoghain GAA</string>
+    <string name="waterford_gaa">Port Láirge GAA</string>
+    <string name="westmeath_gaa">An Iarmhí GAA</string>
+    <string name="wexford_gaa">Loch Garman GAA</string>
+    <string name="wicklow_gaa">Cill Mhantáin GAA</string>
+    <string name="dublin_gaa">Baile Átha Cliath GAA</string>
+    <string name="loading">Luchtú...</string>
+    <string name="clubListTextView">"Roghnaigh do chlub is fearr leat a leathanach Twitter a luchtú! "</string>
+    <string name="loadingText">"Baile na Nuacht GAA "</string>
+    <string name="logout_title">"Logáil Amach "</string>
+</resources>
