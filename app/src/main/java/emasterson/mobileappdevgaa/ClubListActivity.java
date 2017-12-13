@@ -88,131 +88,131 @@ public class ClubListActivity extends BaseActivity implements View.OnClickListen
         Intent i = new Intent(getApplicationContext(), TwitterFeedActivity.class);
         switch(view.getId()){
             case R.id.antrimBtn:
-                i.putExtra("county", antrimBtn.getText());
+                i.putExtra("county", R.string.antrim_gaa);
                 startActivity(i);
                 break;
             case R.id.armaghBtn:
-                i.putExtra("county", armaghBtn.getText());
+                i.putExtra("county", R.string.armagh_gaa);
                 startActivity(i);
                 break;
             case R.id.carlowBtn:
-                i.putExtra("county", carlowBtn.getText());
+                i.putExtra("county", R.string.carlow_gaa);
                 startActivity(i);
                 break;
             case R.id.cavanBtn:
-                i.putExtra("county", cavanBtn.getText());
+                i.putExtra("county", R.string.cavan_gaa);
                 startActivity(i);
                 break;
             case R.id.clareBtn:
-                i.putExtra("county", clareBtn.getText());
+                i.putExtra("county", R.string.clare_gaa);
                 startActivity(i);
                 break;
             case R.id.corkBtn:
-                i.putExtra("county", corkBtn.getText());
+                i.putExtra("county", R.string.cork_gaa);
                 startActivity(i);
                 break;
             case R.id.derryBtn:
-                i.putExtra("county", derryBtn.getText());
+                i.putExtra("county", R.string.derry_gaa);
                 startActivity(i);
                 break;
             case R.id.donegalBtn:
-                i.putExtra("county", donegalBtn.getText());
+                i.putExtra("county", R.string.donegal_gaa);
                 startActivity(i);
                 break;
             case R.id.downBtn:
-                i.putExtra("county", downBtn.getText());
+                i.putExtra("county", R.string.down_gaa);
                 startActivity(i);
                 break;
             case R.id.dublinBtn:
-                i.putExtra("county", dublinBtn.getText());
+                i.putExtra("county", R.string.dublin_gaa);
                 startActivity(i);
                 break;
             case R.id.fermanaghBtn:
-                i.putExtra("county", fermanaghBtn.getText());
+                i.putExtra("county", R.string.fermanagh_gaa);
                 startActivity(i);
                 break;
             case R.id.galwayBtn:
-                i.putExtra("county", galwayBtn.getText());
+                i.putExtra("county", R.string.galway_gaa);
                 startActivity(i);
                 break;
             case R.id.kerryBtn:
-                i.putExtra("county", kerryBtn.getText());
+                i.putExtra("county", R.string.kerry_gaa);
                 startActivity(i);
                 break;
             case R.id.kildareBtn:
-                i.putExtra("county", kildareBtn.getText());
+                i.putExtra("county", R.string.kildare_gaa);
                 startActivity(i);
                 break;
             case R.id.kilkennyBtn:
-                i.putExtra("county", kilkennyBtn.getText());
+                i.putExtra("county", R.string.kilkenny_gaa);
                 startActivity(i);
                 break;
             case R.id.laoisBtn:
-                i.putExtra("county", laoisBtn.getText());
+                i.putExtra("county", R.string.laois_gaa);
                 startActivity(i);
                 break;
             case R.id.leitrimBtn:
-                i.putExtra("county", leitrimBtn.getText());
+                i.putExtra("county", R.string.leitrim_gaa);
                 startActivity(i);
                 break;
             case R.id.limerickBtn:
-                i.putExtra("county", limerickBtn.getText());
+                i.putExtra("county", R.string.limerick_gaa);
                 startActivity(i);
                 break;
             case R.id.longfordBtn:
-                i.putExtra("county", longfordBtn.getText());
+                i.putExtra("county", R.string.longford_gaa);
                 startActivity(i);
                 break;
             case R.id.louthBtn:
-                i.putExtra("county", louthBtn.getText());
+                i.putExtra("county", R.string.louth_gaa);
                 startActivity(i);
                 break;
             case R.id.mayoBtn:
-                i.putExtra("county", mayoBtn.getText());
+                i.putExtra("county", R.string.mayo_gaa);
                 startActivity(i);
                 break;
             case R.id.meathBtn:
-                i.putExtra("county", meathBtn.getText());
+                i.putExtra("county", R.string.meath_gaa);
                 startActivity(i);
                 break;
             case R.id.monaghanBtn:
-                i.putExtra("county", monaghanBtn.getText());
+                i.putExtra("county", R.string.monaghan_gaa);
                 startActivity(i);
                 break;
             case R.id.offalyBtn:
-                i.putExtra("county", offalyBtn.getText());
+                i.putExtra("county", R.string.offaly_gaa);
                 startActivity(i);
                 break;
             case R.id.roscommonBtn:
-                i.putExtra("county", roscommonBtn.getText());
+                i.putExtra("county", R.string.roscommon_gaa);
                 startActivity(i);
                 break;
             case R.id.sligoBtn:
-                i.putExtra("county", sligoBtn.getText());
+                i.putExtra("county", R.string.sligo_gaa);
                 startActivity(i);
                 break;
             case R.id.tipperaryBtn:
-                i.putExtra("county", tipperaryBtn.getText());
+                i.putExtra("county", R.string.tipperary_gaa);
                 startActivity(i);
                 break;
             case R.id.tyroneBtn:
-                i.putExtra("county", tyroneBtn.getText());
+                i.putExtra("county", R.string.tyrone_gaa);
                 startActivity(i);
                 break;
             case R.id.waterfordBtn:
-                i.putExtra("county", waterfordBtn.getText());
+                i.putExtra("county", R.string.waterford_gaa);
                 startActivity(i);
                 break;
             case R.id.westmeathBtn:
-                i.putExtra("county", westmeathBtn.getText());
+                i.putExtra("county", R.string.westmeath_gaa);
                 startActivity(i);
                 break;
             case R.id.wexfordBtn:
-                i.putExtra("county", wexfordBtn.getText());
+                i.putExtra("county", R.string.wexford_gaa);
                 startActivity(i);
                 break;
             case R.id.wicklowBtn:
-                i.putExtra("county", wicklowBtn.getText());
+                i.putExtra("county", R.string.wicklow_gaa);
                 startActivity(i);
                 break;
         }
