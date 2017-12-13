@@ -3,11 +3,19 @@ package emasterson.mobileappdevgaa;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
+import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
 public class TwitterFeedActivity extends BaseActivity{
+    Button timelineBtn, searchfeedBtn;
+    RecyclerView recyclerView;
+    UserTimeline userTimeline;
+    SearchTimeline searchTimeline;
+    TweetTimelineRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,19 +24,50 @@ public class TwitterFeedActivity extends BaseActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        timelineBtn = findViewById(R.id.timelineBtn);
+        searchfeedBtn = findViewById(R.id.searchfeedBtn);
+        recyclerView = findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        UserTimeline userTimeline = new UserTimeline.Builder()
+
+        userTimeline = new UserTimeline.Builder()
                 .screenName(getTimeline(getIntent().getIntExtra("county", 0)))
                 .build();
 
-        TweetTimelineRecyclerViewAdapter adapter = new TweetTimelineRecyclerViewAdapter.Builder(this)
+        System.out.println(getTimeline(getIntent().getIntExtra("county", 0)));
+        searchTimeline = new SearchTimeline.Builder()
+                .query(getTimeline(getIntent().getIntExtra("county", 0)))
+                .maxItemsPerRequest(50)
+                .build();
+
+        adapter = new TweetTimelineRecyclerViewAdapter.Builder(this)
                 .setTimeline(userTimeline)
                 .setViewStyle(R.style.tw__TweetLightWithActionsStyle)
                 .build();
 
         recyclerView.setAdapter(adapter);
+
+        timelineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter = new TweetTimelineRecyclerViewAdapter.Builder(getApplicationContext())
+                        .setTimeline(userTimeline)
+                        .setViewStyle(R.style.tw__TweetLightWithActionsStyle)
+                        .build();
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+        searchfeedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter = new TweetTimelineRecyclerViewAdapter.Builder(getApplicationContext())
+                        .setTimeline(searchTimeline)
+                        .setViewStyle(R.style.tw__TweetLightWithActionsStyle)
+                        .build();
+                recyclerView.setAdapter(adapter);
+            }
+        });
     }
 
     public String getTimeline(int stringResource){
