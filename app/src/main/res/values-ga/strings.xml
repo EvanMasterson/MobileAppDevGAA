@@ -36,4 +36,6 @@
     <string name="clubListTextView">"Roghnaigh do chlub is fearr leat a leathanach Twitter a luchtú! "</string>
     <string name="loadingText">"Baile na Nuacht GAA "</string>
     <string name="logout_title">"Logáil Amach "</string>
+    <string name="timelineBtn">"Amlíne "</string>
+    <string name="searchfeedBtn">"Beatha Cuardaigh "</string>
 </resources>

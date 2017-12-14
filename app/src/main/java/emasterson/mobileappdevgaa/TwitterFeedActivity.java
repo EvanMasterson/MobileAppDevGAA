@@ -1,21 +1,33 @@
 package emasterson.mobileappdevgaa;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
+import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
+/*
+    @Reference
+    https://dev.twitter.com/twitterkit/android/overview
+ */
 public class TwitterFeedActivity extends BaseActivity{
     Button timelineBtn, searchfeedBtn;
     RecyclerView recyclerView;
     UserTimeline userTimeline;
     SearchTimeline searchTimeline;
     TweetTimelineRecyclerViewAdapter adapter;
+    SwipeRefreshLayout swipeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +39,7 @@ public class TwitterFeedActivity extends BaseActivity{
         timelineBtn = findViewById(R.id.timelineBtn);
         searchfeedBtn = findViewById(R.id.searchfeedBtn);
         recyclerView = findViewById(R.id.recyclerView);
+        swipeLayout = findViewById(R.id.swipeLayout);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -34,7 +47,6 @@ public class TwitterFeedActivity extends BaseActivity{
                 .screenName(getTimeline(getIntent().getIntExtra("county", 0)))
                 .build();
 
-        System.out.println(getTimeline(getIntent().getIntExtra("county", 0)));
         searchTimeline = new SearchTimeline.Builder()
                 .query(getTimeline(getIntent().getIntExtra("county", 0)))
                 .maxItemsPerRequest(50)
@@ -66,6 +78,24 @@ public class TwitterFeedActivity extends BaseActivity{
                         .setViewStyle(R.style.tw__TweetLightWithActionsStyle)
                         .build();
                 recyclerView.setAdapter(adapter);
+            }
+        });
+
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeLayout.setRefreshing(true);
+                adapter.refresh(new Callback<TimelineResult<Tweet>>() {
+                    @Override
+                    public void success(Result<TimelineResult<Tweet>> result) {
+                        swipeLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+                        Toast.makeText(getApplicationContext(), "Unable to Refresh", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
     }

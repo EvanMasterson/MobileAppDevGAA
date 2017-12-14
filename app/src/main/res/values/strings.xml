@@ -38,4 +38,6 @@
     <string name="wexford_gaa">Wexford GAA</string>
     <string name="wicklow_gaa">Wicklow GAA</string>
     <string name="logout_title">Logout</string>
+    <string name="timelineBtn">Timeline</string>
+    <string name="searchfeedBtn">Search Feed</string>
 </resources>
