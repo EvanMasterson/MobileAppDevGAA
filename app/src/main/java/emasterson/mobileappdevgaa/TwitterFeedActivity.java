@@ -1,5 +1,8 @@
 package emasterson.mobileappdevgaa;
 
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,12 @@ import android.widget.Toast;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
@@ -22,12 +29,14 @@ import com.twitter.sdk.android.tweetui.UserTimeline;
     https://dev.twitter.com/twitterkit/android/overview
  */
 public class TwitterFeedActivity extends BaseActivity{
-    Button timelineBtn, searchfeedBtn;
+    String getIntent;
+    Button timelineBtn, searchfeedBtn, tweetBtn;
     RecyclerView recyclerView;
     UserTimeline userTimeline;
     SearchTimeline searchTimeline;
     TweetTimelineRecyclerViewAdapter adapter;
     SwipeRefreshLayout swipeLayout;
+    boolean isExistTwitterClient = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,19 +45,23 @@ public class TwitterFeedActivity extends BaseActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getIntent = getTimeline(getIntent().getIntExtra("county", 0));
         timelineBtn = findViewById(R.id.timelineBtn);
         searchfeedBtn = findViewById(R.id.searchfeedBtn);
+        tweetBtn = findViewById(R.id.tweetBtn);
         recyclerView = findViewById(R.id.recyclerView);
         swipeLayout = findViewById(R.id.swipeLayout);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         userTimeline = new UserTimeline.Builder()
-                .screenName(getTimeline(getIntent().getIntExtra("county", 0)))
+                .screenName(getIntent)
+                .includeReplies(true)
+                .includeRetweets(true)
                 .build();
 
         searchTimeline = new SearchTimeline.Builder()
-                .query(getTimeline(getIntent().getIntExtra("county", 0)))
+                .query(getIntent)
                 .maxItemsPerRequest(50)
                 .build();
 
@@ -78,6 +91,35 @@ public class TwitterFeedActivity extends BaseActivity{
                         .setViewStyle(R.style.tw__TweetLightWithActionsStyle)
                         .build();
                 recyclerView.setAdapter(adapter);
+            }
+        });
+
+        tweetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                    Check if Twitter app is installed
+                    If it is it lets the user compose the tweet from inside our application
+                    If not it opens twitter in the browser as we don't have access to the Composer
+                 */
+                try {
+                    ApplicationInfo info = getPackageManager().getApplicationInfo("com.twitter.android", 0 );
+                    isExistTwitterClient = true;
+                } catch (PackageManager.NameNotFoundException e) {}
+
+                if(isExistTwitterClient) {
+                    TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+                    Intent intent = new ComposerActivity.Builder(TwitterFeedActivity.this)
+                            .session(session)
+                            .text("@" + getIntent)
+                            .createIntent();
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Twitter App is not installed on device, launching in browser!", Toast.LENGTH_LONG).show();
+                    TweetComposer.Builder builder = new TweetComposer.Builder(TwitterFeedActivity.this)
+                        .text("@" + getIntent);
+                     builder.show();
+                }
             }
         });
 
