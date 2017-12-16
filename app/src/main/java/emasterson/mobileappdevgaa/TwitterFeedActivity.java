@@ -5,7 +5,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,11 +34,13 @@ import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
+import retrofit2.Call;
+
 /*
     @Reference
     https://dev.twitter.com/twitterkit/android/overview
  */
-public class TwitterFeedActivity extends BaseActivity{
+public class TwitterFeedActivity extends BaseActivity implements SensorEventListener{
     String getIntent;
     Button timelineBtn, searchfeedBtn, tweetBtn;
     RecyclerView recyclerView;
@@ -43,6 +50,10 @@ public class TwitterFeedActivity extends BaseActivity{
     SwipeRefreshLayout swipeLayout;
     boolean isExistTwitterClient = false;
     TwitterSession session;
+    private SensorManager sesnsorManager;
+    private long lastUpdate;
+    private boolean delete = false;
+    long tweetId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +69,9 @@ public class TwitterFeedActivity extends BaseActivity{
         recyclerView = findViewById(R.id.recyclerView);
         swipeLayout = findViewById(R.id.swipeLayout);
         session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+
+        sesnsorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        lastUpdate = System.currentTimeMillis();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -149,27 +163,125 @@ public class TwitterFeedActivity extends BaseActivity{
         });
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        sesnsorManager.registerListener(this, sesnsorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            getAccelerometer(event);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
     public void receiver(){
-        IntentFilter intentFilter = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS");
+        IntentFilter intentFilterSuccess = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS");
+        IntentFilter intentFilterFailure = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_FAILURE");
+        IntentFilter intentFilterCancel = new IntentFilter("com.twitter.sdk.android.tweetcomposer.TWEET_COMPOSE_CANCEL");
         MyResultReceiver receiver = new MyResultReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle intentExtras = intent.getExtras();
                 if (TweetUploadService.UPLOAD_SUCCESS.equals(intent.getAction())) {
                     // success
-                    Long tweetId = intentExtras.getLong(TweetUploadService.EXTRA_TWEET_ID);
-                    Toast.makeText(getApplicationContext(), "Successful Tweet", Toast.LENGTH_LONG).show();
+                    Long id = intentExtras.getLong(TweetUploadService.EXTRA_TWEET_ID);
+                    tweetId = id;
+                    showResult();
+                    Toast.makeText(getApplicationContext(), "Shake your phone in the next 30 seconds to delete your last Tweet!", Toast.LENGTH_LONG).show();
                 } else if (TweetUploadService.UPLOAD_FAILURE.equals(intent.getAction())) {
                     // failure
                     Intent retryIntent = intentExtras.getParcelable(TweetUploadService.EXTRA_RETRY_INTENT);
-                    Toast.makeText(getApplicationContext(), "Failed to Tweet", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Failed to Tweet", Toast.LENGTH_SHORT).show();
                 } else if (TweetUploadService.TWEET_COMPOSE_CANCEL.equals(intent.getAction())) {
                     // cancel
-                    Toast.makeText(getApplicationContext(), "Cancelled Tweet", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Cancelled Tweet", Toast.LENGTH_SHORT).show();
                 }
             }
         };
-        registerReceiver(receiver, intentFilter);
+        registerReceiver(receiver, intentFilterSuccess);
+        registerReceiver(receiver, intentFilterFailure);
+        registerReceiver(receiver, intentFilterCancel);
+    }
+
+    public void showResult(){
+        System.out.println(tweetId);
+        userTimeline = new UserTimeline.Builder()
+                .screenName(session.getUserName())
+                .includeReplies(true)
+                .includeRetweets(true)
+                .build();
+        adapter = new TweetTimelineRecyclerViewAdapter.Builder(this)
+                .setTimeline(userTimeline)
+                .setViewStyle(R.style.tw__TweetLightWithActionsStyle)
+                .build();
+        recyclerView.setAdapter(adapter);
+        startTimer();
+    }
+
+    public void startTimer(){
+        delete = true;
+        new CountDownTimer(30000, 1000) {
+            public void onTick(long millisUntilFinished) {
+            }
+            public void onFinish() {
+                delete = false;
+            }
+        }.start();
+    }
+
+    public void deleteTweet(){
+        TwitterApiClient twitterApiClient = TwitterCore.getInstance().getApiClient();
+        StatusesService statusesService = twitterApiClient.getStatusesService();
+        Call<Tweet> call = statusesService.destroy(tweetId, null);
+        call.enqueue(new Callback<Tweet>() {
+            @Override
+            public void success(Result<Tweet> result) {
+                Toast.makeText(getApplicationContext(), "Tweet Succesfully Deleted!", Toast.LENGTH_LONG).show();
+                adapter.refresh(new Callback<TimelineResult<Tweet>>() {
+                    @Override
+                    public void success(Result<TimelineResult<Tweet>> result) {
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+                        Toast.makeText(getApplicationContext(), "Unable to Refresh", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                Toast.makeText(getApplicationContext(), "Tweet no longer exists or 30 seconds have passed", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void getAccelerometer(SensorEvent event) {
+        float[] values = event.values;
+        // Movement
+        float x = values[0];
+        float y = values[1];
+        float z = values[2];
+
+        float accelationSquareRoot = (x * x + y * y + z * z) / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
+        long actualTime = event.timestamp;
+        if (accelationSquareRoot >= 2) {
+            if (actualTime - lastUpdate < 200) {
+                return;
+            }
+            lastUpdate = actualTime;
+
+            if (delete) {
+                deleteTweet();
+                delete = false;
+            }
+        }
     }
 
     public String getTimeline(int stringResource){
