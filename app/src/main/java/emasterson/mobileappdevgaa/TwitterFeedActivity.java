@@ -11,6 +11,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,10 +51,11 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     SwipeRefreshLayout swipeLayout;
     boolean isExistTwitterClient = false;
     TwitterSession session;
-    private SensorManager sesnsorManager;
+    private SensorManager sensorManager;
     private long lastUpdate;
     private boolean delete = false;
     long tweetId;
+    MyResultReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +72,23 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
         swipeLayout = findViewById(R.id.swipeLayout);
         session = TwitterCore.getInstance().getSessionManager().getActiveSession();
 
-        sesnsorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lastUpdate = System.currentTimeMillis();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        IntentFilter intentFilterSuccess = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS");
+        IntentFilter intentFilterFailure = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_FAILURE");
+        IntentFilter intentFilterCancel = new IntentFilter("com.twitter.sdk.android.tweetcomposer.TWEET_COMPOSE_CANCEL");
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilterSuccess);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilterFailure);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilterCancel);
+
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 
         userTimeline = new UserTimeline.Builder()
                 .screenName(getIntent)
@@ -138,8 +153,8 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
                 } else {
                     Toast.makeText(getApplicationContext(), "Twitter App is not installed on device, launching in browser!", Toast.LENGTH_LONG).show();
                     TweetComposer.Builder builder = new TweetComposer.Builder(TwitterFeedActivity.this)
-                        .text("@" + getIntent);
-                     builder.show();
+                            .text("@" + getIntent);
+                    builder.show();
                 }
             }
         });
@@ -164,9 +179,10 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     }
 
     @Override
-    protected void onResume(){
-        super.onResume();
-        sesnsorManager.registerListener(this, sesnsorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+    protected void onPause(){
+        super.onPause();
+        sensorManager.unregisterListener(this);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
     @Override
@@ -181,10 +197,7 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     }
 
     public void receiver(){
-        IntentFilter intentFilterSuccess = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS");
-        IntentFilter intentFilterFailure = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_FAILURE");
-        IntentFilter intentFilterCancel = new IntentFilter("com.twitter.sdk.android.tweetcomposer.TWEET_COMPOSE_CANCEL");
-        MyResultReceiver receiver = new MyResultReceiver() {
+        receiver = new MyResultReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle intentExtras = intent.getExtras();
@@ -204,9 +217,6 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
                 }
             }
         };
-        registerReceiver(receiver, intentFilterSuccess);
-        registerReceiver(receiver, intentFilterFailure);
-        registerReceiver(receiver, intentFilterCancel);
     }
 
     public void showResult(){
