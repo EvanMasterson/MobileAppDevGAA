@@ -11,7 +11,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,7 +54,7 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     private long lastUpdate;
     private boolean delete = false;
     long tweetId;
-    MyResultReceiver receiver;
+//    MyResultReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +80,6 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     @Override
     protected void onResume(){
         super.onResume();
-        IntentFilter intentFilterSuccess = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS");
-        IntentFilter intentFilterFailure = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_FAILURE");
-        IntentFilter intentFilterCancel = new IntentFilter("com.twitter.sdk.android.tweetcomposer.TWEET_COMPOSE_CANCEL");
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilterSuccess);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilterFailure);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilterCancel);
-
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 
         userTimeline = new UserTimeline.Builder()
@@ -182,7 +174,6 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     protected void onPause(){
         super.onPause();
         sensorManager.unregisterListener(this);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
     @Override
@@ -197,7 +188,7 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     }
 
     public void receiver(){
-        receiver = new MyResultReceiver() {
+        MyResultReceiver receiver = new MyResultReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle intentExtras = intent.getExtras();
@@ -217,6 +208,12 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
                 }
             }
         };
+        IntentFilter intentFilterSuccess = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS");
+        IntentFilter intentFilterFailure = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_FAILURE");
+        IntentFilter intentFilterCancel = new IntentFilter("com.twitter.sdk.android.tweetcomposer.TWEET_COMPOSE_CANCEL");
+        registerReceiver(receiver, intentFilterSuccess);
+        registerReceiver(receiver, intentFilterFailure);
+        registerReceiver(receiver, intentFilterCancel);
     }
 
     public void showResult(){
