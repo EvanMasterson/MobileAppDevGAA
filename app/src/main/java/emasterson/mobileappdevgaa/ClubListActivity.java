@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/*
+    This activity lists all the GAA clubs a user can choose from then redirects them to the TwitterFeedActivity class
+ */
 public class ClubListActivity extends BaseActivity implements View.OnClickListener{
     private Button antrimBtn, armaghBtn, carlowBtn, cavanBtn, clareBtn, corkBtn, derryBtn,
             donegalBtn, downBtn, dublinBtn, fermanaghBtn, galwayBtn, kerryBtn, kildareBtn,

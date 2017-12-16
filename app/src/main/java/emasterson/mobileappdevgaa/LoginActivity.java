@@ -29,6 +29,11 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
     https://github.com/firebase/quickstart-android/tree/master/auth
     https://firebase.google.com/docs/auth/android/twitter-login?authuser=0
  */
+
+/*
+    This activity authenticates the Twitter user through Firebase API and Twitter API
+    If they user already has an active session they are automatically brought to the ClubListActivity class
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private TwitterLoginButton loginButton;
@@ -74,6 +79,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.onActivityResult(requestCode, resultCode, data);
     }
 
+    /*
+        Decides whether the user has been authenticated or not, sets that user as the current user for session info
+     */
     private void handleTwitterSession(TwitterSession session) {
         showProgressDialog();
 
@@ -94,6 +102,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /*
+        Once user is authorised it sends them to the ClubListActivity class
+     */
     private void confirmUser(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {

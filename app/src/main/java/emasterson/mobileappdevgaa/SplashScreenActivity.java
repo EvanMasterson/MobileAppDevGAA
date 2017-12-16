@@ -6,6 +6,10 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 
+/*
+    This activity displays a splash screen on startup for 4.5 seconds
+    Incorporates sound when loading is finished
+ */
 public class SplashScreenActivity extends Activity {
     MediaPlayer media = null;
 

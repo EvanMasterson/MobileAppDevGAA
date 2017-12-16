@@ -54,7 +54,6 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     private long lastUpdate;
     private boolean delete = false;
     long tweetId;
-//    MyResultReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +76,10 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    /*
+        Sets up all the onClickListeners for buttons
+        Sets up timeline displays depending on the value passed in the Intent from prevous class
+     */
     @Override
     protected void onResume(){
         super.onResume();
@@ -187,6 +190,10 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
+    /*
+        Overrides the onRecieve method in MyResultReceiver class which extends BroadcastReceiver
+        Neccessary for Twitter Composer to launch
+     */
     public void receiver(){
         MyResultReceiver receiver = new MyResultReceiver() {
             @Override
@@ -216,6 +223,10 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
         registerReceiver(receiver, intentFilterCancel);
     }
 
+    /*
+        Displays users timeline after they have successfully tweeted
+        Timer is activated to allow them delete a tweet in the next 30 seconds
+     */
     public void showResult(){
         System.out.println(tweetId);
         userTimeline = new UserTimeline.Builder()
@@ -231,6 +242,9 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
         startTimer();
     }
 
+    /*
+        30 seconds countdown time which sets tweet to be deletable to true
+     */
     public void startTimer(){
         delete = true;
         new CountDownTimer(30000, 1000) {
@@ -242,6 +256,10 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
         }.start();
     }
 
+    /*
+        Method to delete the latest tweet and refresh the view
+        Toast message appear on confirmation or failure
+     */
     public void deleteTweet(){
         TwitterApiClient twitterApiClient = TwitterCore.getInstance().getApiClient();
         StatusesService statusesService = twitterApiClient.getStatusesService();
@@ -269,6 +287,10 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
         });
     }
 
+    /*
+        Method to check if the user is shaking the phone or not
+        If they are and delete is set to true then it triggers the deleteTweet method
+     */
     private void getAccelerometer(SensorEvent event) {
         float[] values = event.values;
         // Movement

@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/*
+    This activity is extending by other activities to show the menuOptions
+    Allows the user logout or click the back button
+ */
 public class BaseActivity extends AppCompatActivity {
     FirebaseAuth auth;
 
