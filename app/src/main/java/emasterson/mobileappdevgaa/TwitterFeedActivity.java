@@ -1,6 +1,8 @@
 package emasterson.mobileappdevgaa;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,12 +15,15 @@ import android.widget.Toast;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.core.services.StatusesService;
 import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
+import com.twitter.sdk.android.tweetcomposer.TweetUploadService;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
@@ -37,6 +42,7 @@ public class TwitterFeedActivity extends BaseActivity{
     TweetTimelineRecyclerViewAdapter adapter;
     SwipeRefreshLayout swipeLayout;
     boolean isExistTwitterClient = false;
+    TwitterSession session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class TwitterFeedActivity extends BaseActivity{
         tweetBtn = findViewById(R.id.tweetBtn);
         recyclerView = findViewById(R.id.recyclerView);
         swipeLayout = findViewById(R.id.swipeLayout);
+        session = TwitterCore.getInstance().getSessionManager().getActiveSession();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -108,12 +115,12 @@ public class TwitterFeedActivity extends BaseActivity{
                 } catch (PackageManager.NameNotFoundException e) {}
 
                 if(isExistTwitterClient) {
-                    TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
                     Intent intent = new ComposerActivity.Builder(TwitterFeedActivity.this)
                             .session(session)
                             .text("@" + getIntent)
                             .createIntent();
                     startActivity(intent);
+                    receiver();
                 } else {
                     Toast.makeText(getApplicationContext(), "Twitter App is not installed on device, launching in browser!", Toast.LENGTH_LONG).show();
                     TweetComposer.Builder builder = new TweetComposer.Builder(TwitterFeedActivity.this)
@@ -140,6 +147,29 @@ public class TwitterFeedActivity extends BaseActivity{
                 });
             }
         });
+    }
+
+    public void receiver(){
+        IntentFilter intentFilter = new IntentFilter("com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS");
+        MyResultReceiver receiver = new MyResultReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle intentExtras = intent.getExtras();
+                if (TweetUploadService.UPLOAD_SUCCESS.equals(intent.getAction())) {
+                    // success
+                    Long tweetId = intentExtras.getLong(TweetUploadService.EXTRA_TWEET_ID);
+                    Toast.makeText(getApplicationContext(), "Successful Tweet", Toast.LENGTH_LONG).show();
+                } else if (TweetUploadService.UPLOAD_FAILURE.equals(intent.getAction())) {
+                    // failure
+                    Intent retryIntent = intentExtras.getParcelable(TweetUploadService.EXTRA_RETRY_INTENT);
+                    Toast.makeText(getApplicationContext(), "Failed to Tweet", Toast.LENGTH_LONG).show();
+                } else if (TweetUploadService.TWEET_COMPOSE_CANCEL.equals(intent.getAction())) {
+                    // cancel
+                    Toast.makeText(getApplicationContext(), "Cancelled Tweet", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+        registerReceiver(receiver, intentFilter);
     }
 
     public String getTimeline(int stringResource){

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">MobileAppDevGAA</string>
     <string name="loadingText">Home of GAA News</string>
-    <string name="CONSUMER_KEY" translatable="false">nagPFYudKjxaxiVoM1jvY6aLG</string>
-    <string name="CONSUMER_SECRET" translatable="false">vc7so9zH2K3hMNXnZCS0S2DiAb9xep9UotK4gzy6Ea5bECasKQ</string>
+    <string name="CONSUMER_KEY" translatable="false">pBJqO6Z0bk3gPrJ6thG1xPRSY</string>
+    <string name="CONSUMER_SECRET" translatable="false">yMtsg4RrAgmkJDl21Tz6uSGljM9EBMcO3FDfLX3WJcAshYT9Wn</string>
     <string name="clubListTextView">Select your preferred club to load their Twitter page!</string>
     <string name="loading">Loading…</string>
     <string name="antrim_gaa">Antrim GAA</string>
