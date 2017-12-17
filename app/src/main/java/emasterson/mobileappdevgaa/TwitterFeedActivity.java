@@ -1,6 +1,8 @@
 package emasterson.mobileappdevgaa;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
@@ -48,12 +50,10 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     SearchTimeline searchTimeline;
     TweetTimelineRecyclerViewAdapter adapter;
     SwipeRefreshLayout swipeLayout;
-    boolean isExistTwitterClient = false;
     TwitterSession session;
     private SensorManager sensorManager;
-    private long lastUpdate;
-    private boolean delete = false;
-    long tweetId;
+    private boolean isExistTwitterClient, delete = false;
+    long lastUpdate, tweetId, timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,6 +249,7 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
         delete = true;
         new CountDownTimer(30000, 1000) {
             public void onTick(long millisUntilFinished) {
+                timer = millisUntilFinished/1000;
             }
             public void onFinish() {
                 delete = false;
@@ -263,28 +264,46 @@ public class TwitterFeedActivity extends BaseActivity implements SensorEventList
     public void deleteTweet(){
         TwitterApiClient twitterApiClient = TwitterCore.getInstance().getApiClient();
         StatusesService statusesService = twitterApiClient.getStatusesService();
-        Call<Tweet> call = statusesService.destroy(tweetId, null);
-        call.enqueue(new Callback<Tweet>() {
+        final Call<Tweet> call = statusesService.destroy(tweetId, null);
+        DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
             @Override
-            public void success(Result<Tweet> result) {
-                Toast.makeText(getApplicationContext(), "Tweet Succesfully Deleted!", Toast.LENGTH_LONG).show();
-                adapter.refresh(new Callback<TimelineResult<Tweet>>() {
-                    @Override
-                    public void success(Result<TimelineResult<Tweet>> result) {
-                    }
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        call.enqueue(new Callback<Tweet>() {
+                            @Override
+                            public void success(Result<Tweet> result) {
+                                Toast.makeText(getApplicationContext(), "Tweet Succesfully Deleted!", Toast.LENGTH_LONG).show();
+                                adapter.refresh(new Callback<TimelineResult<Tweet>>() {
+                                    @Override
+                                    public void success(Result<TimelineResult<Tweet>> result) {
+                                    }
 
-                    @Override
-                    public void failure(TwitterException exception) {
-                        Toast.makeText(getApplicationContext(), "Unable to Refresh", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+                                    @Override
+                                    public void failure(TwitterException exception) {
+                                        Toast.makeText(getApplicationContext(), "Unable to Refresh", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
 
-            @Override
-            public void failure(TwitterException exception) {
-                Toast.makeText(getApplicationContext(), "Tweet no longer exists or 30 seconds have passed", Toast.LENGTH_LONG).show();
+                            @Override
+                            public void failure(TwitterException exception) {
+                                Toast.makeText(getApplicationContext(), "Tweet no longer exists or 30 seconds have passed", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        dialog.dismiss();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        if(timer != 0) {
+                            delete = true;
+                        }
+                        dialog.dismiss();
+                        break;
+                }
             }
-        });
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to delete Tweet?").setPositiveButton("Yes", dialog).setNegativeButton("No", dialog).show();
     }
 
     /*
