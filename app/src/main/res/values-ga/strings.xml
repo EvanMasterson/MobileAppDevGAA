@@ -33,9 +33,11 @@
     <string name="wicklow_gaa">Cill Mhantáin GAA</string>
     <string name="dublin_gaa">Baile Átha Cliath GAA</string>
     <string name="loading">Luchtú...</string>
-    <string name="clubListTextView">"Roghnaigh do chlub is fearr leat a leathanach Twitter a luchtú! "</string>
-    <string name="loadingText">"Baile na Nuacht GAA "</string>
-    <string name="logout_title">"Logáil Amach "</string>
-    <string name="timelineBtn">"Amlíne "</string>
+    <string name="clubListTextView">Roghnaigh do chlub is fearr leat a leathanach Twitter a luchtú!</string>
+    <string name="loadingText">Baile na Nuacht GAA</string>
+    <string name="logout_title">Logáil Amach</string>
+    <string name="timelineBtn">Amlíne</string>
     <string name="searchfeedBtn">"Beatha Cuardaigh "</string>
+    <string name="app_title_login">Logáil isteach</string>
+    <string name="app_title_clubs">Liosta an Chlub</string>
 </resources>

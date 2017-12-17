@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">MobileAppDevGAA</string>
+    <string name="app_title_login">Login</string>
+    <string name="app_title_clubs">Club List</string>
+    <string name="app_title_feed" translatable="false">Twitter Feed</string>
     <string name="loadingText">Home of GAA News</string>
     <string name="CONSUMER_KEY" translatable="false">pBJqO6Z0bk3gPrJ6thG1xPRSY</string>
     <string name="CONSUMER_SECRET" translatable="false">yMtsg4RrAgmkJDl21Tz6uSGljM9EBMcO3FDfLX3WJcAshYT9Wn</string>
@@ -40,4 +43,5 @@
     <string name="logout_title">Logout</string>
     <string name="timelineBtn">Timeline</string>
     <string name="searchfeedBtn">Search Feed</string>
+    <string name="tweetBtn" translatable="false">Tweet</string>
 </resources>

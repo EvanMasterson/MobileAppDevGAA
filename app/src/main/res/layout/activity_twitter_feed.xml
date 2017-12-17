@@ -38,7 +38,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/tw__btn_composer_tweet"
-        android:text="Tweet"
+        android:text="@string/tweetBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
