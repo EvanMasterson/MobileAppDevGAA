@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">MobileAppDevGAA</string>
+    <string name="app_name" translatable="false">Home of GAA News</string>
     <string name="app_title_login">Login</string>
     <string name="app_title_clubs">Club List</string>
     <string name="app_title_feed" translatable="false">Twitter Feed</string>
